@@ -1,4 +1,4 @@
-﻿// 本地 HTTP 服务：API + 静态界面（多账号支持）
+// 本地 HTTP 服务：API + 静态界面（多账号支持）
 import http from 'node:http'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -113,6 +113,7 @@ export function startServer({ account, port = 7080, cacheDir }) {
           myWxid: repo.myWxidShort,
           myName: repo.displayName(repo.myWxidShort) || repo.myWxidShort,
           imageKeys: Boolean(repo.imageKeys),
+          voiceReady: voiceModelStatus().ready,
           ffmpeg: Boolean(getFfmpeg()),
           sessionCount: repo.sessionCount(),
           cache: repo.cache.stats(),

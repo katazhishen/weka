@@ -1,4 +1,4 @@
-﻿// weka 前端（零依赖 SPA）
+// weka 前端（零依赖 SPA）
 const $ = (s, r = document) => r.querySelector(s)
 const $$ = (s, r = document) => [...r.querySelectorAll(s)]
 
@@ -36,6 +36,7 @@ const S = {
   account: localStorage.getItem('weka.account') || '',
   theme: localStorage.getItem('weka.theme') || 'light',
   myName: '',
+  privacy: localStorage.getItem('weka.privacy') === '1',
   chat: { current: null, oldest: null, hasMore: false, loading: false, recalled: [], showRecalled: localStorage.getItem('weka.showRecalled') === '1' },
   mom: { keyword: '', from: '', to: '', contact: '', offset: 0, items: [] },
   pick: { p2p: null, group: null, annualYear: null },
@@ -166,7 +167,7 @@ async function pageHome(el) {
           <div class="tip">聊天图片解密：${meta.imageKeys ? '<b style="color:var(--primary)">已配置密钥</b>' : '未配置'}</div>
           <div class="tip">WXGF→图片转码：${meta.ffmpeg ? '<b style="color:var(--primary)">ffmpeg 就绪</b>' : '缺少 ffmpeg'}</div>
           <div class="tip">防撤回：旁路归档持续记录中（不改动微信数据库）</div>
-          <div class="tip">语音转文字：需下载 SenseVoice 模型（设置 → 语音转文字）</div>
+          <div class="tip">语音转文字：${meta.voiceReady ? '<b style="color:var(--primary)">SenseVoice 已就绪</b>' : '需下载 SenseVoice 模型（设置 → 语音转文字）'}</div>
         </div>
       </div>
     </div>`
@@ -958,6 +959,13 @@ async function pageSettings(el) {
           </select></div>
         <div class="row" style="padding:8px 0"><span>侧栏</span><span class="spacer"></span>
           <button class="btn" id="toggle-collapse">展开 / 收起</button></div>
+        <div class="row" style="padding:8px 0">
+          <div><div>截图打码模式</div>
+          <div class="muted" style="font-size:11.5px">把所有文字和头像模糊掉，方便分享截图</div></div>
+          <span class="spacer"></span>
+          <label class="switch"><input type="checkbox" id="privacy-toggle" ${S.privacy ? 'checked' : ''} />
+            <span class="switch-track"><span class="switch-thumb"></span></span></label>
+        </div>
       </div>`,
     security: () => `
       <div class="card" style="margin-bottom:14px">
@@ -1030,6 +1038,12 @@ async function pageSettings(el) {
       document.documentElement.dataset.mode = S.theme
     })
     $('#toggle-collapse')?.addEventListener('click', toggleCollapse)
+    $('#privacy-toggle')?.addEventListener('change', (e) => {
+      S.privacy = e.target.checked
+      localStorage.setItem('weka.privacy', S.privacy ? '1' : '0')
+      document.documentElement.dataset.privacy = S.privacy ? '1' : '0'
+      toast(S.privacy ? '已开启打码模式' : '已关闭打码模式')
+    })
     // 语音页：拉取真实模型状态
     if (S.setTab === 'voice') loadVoiceStatus()
   }
@@ -1116,6 +1130,13 @@ function toggleCollapse() {
 
 async function boot() {
   document.documentElement.dataset.mode = S.theme
+  // 打码模式：?privacy=1 强制开启，?privacy=0 强制关闭
+  const qp = new URLSearchParams(location.search).get('privacy')
+  if (qp === '1' || qp === '0') {
+    S.privacy = qp === '1'
+    localStorage.setItem('weka.privacy', S.privacy ? '1' : '0')
+  }
+  document.documentElement.dataset.privacy = S.privacy ? '1' : '0'
   $$('.nav-icon[data-icon]').forEach((n) => (n.innerHTML = icon(n.dataset.icon)))
   if (localStorage.getItem('weka.collapsed') === '1') $('#app').classList.add('collapsed')
   $('#collapse-btn').addEventListener('click', toggleCollapse)
@@ -1136,5 +1157,6 @@ async function boot() {
 }
 
 boot()
+
 
 

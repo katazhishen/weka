@@ -464,3 +464,58 @@ html, body {
 .search-hit:hover { background: var(--card-2); }
 .search-text { flex: 1; min-width: 0; word-break: break-word; }
 .search-text mark { background: var(--gold-soft); color: var(--gold-3); border-radius: 3px; padding: 0 2px; }
+
+/* ================= 截图打码模式（隐私保护） =================
+   开启后所有文字与头像做模糊处理，布局与图表保持不变，方便分享截图 */
+html[data-privacy='1'] :is(
+  .brand-text, .nav-label, .topbar-user, .hero-name, .chip,
+  .session-name, .session-summary, .session-meta,
+  .chat-title, .chat-sub, .msg-head, .bubble, .day-sep, .empty,
+  .stat-label, .stat-value, .stat-sub, .card-title, .info-bar, .tips .tip,
+  .moment-head, .moment-text, .moment-media, .moment-comment, .moment-likes,
+  .filter-title, .contact-mini, .input, .btn, .perf,
+  .search-head, .search-hit, .hbar, .bar-labels, .donut-legend,
+  .picker-row, .fmt-name, .fmt-desc, .year-card, .annual-title,
+  .table, .side-title, .switch-label, .chat-status, .voice-dur, .voice-text,
+  .lang-card, .opt, .heat, .poster-note
+) {
+  filter: blur(5px);
+  user-select: none;
+}
+html[data-privacy='1'] :is(
+  .avatar, .avatar-sm, .avatar-xs, .hero-avatar, .msg-avatar,
+  .msg-image, .topbar-avatar, .stat-ic
+) {
+  filter: blur(8px) saturate(0.7);
+}
+html[data-privacy='1'] body::after {
+  content: '示例截图 · 已打码';
+  position: fixed; right: 10px; bottom: 8px; z-index: 300;
+  font-size: 11px; color: var(--text-3); background: var(--card);
+  border: 1px solid var(--line); border-radius: 7px; padding: 2px 8px;
+  pointer-events: none;
+}
+
+/* 打码模式补充：漏网的小字（.muted / 状态栏 / 表格 / 页脚） */
+html[data-privacy='1'] :is(
+  .muted, .sidebar-foot, .chat-status, .perf, .table td, .table th,
+  .topbar-title, .hint, .brand, .poster, .day-sep, .empty, .loading
+) { filter: blur(5px); }
+
+/* ===== 打码模式（终极兜底）：所有文字一律遮罩，不依赖类名 ===== */
+html[data-privacy='1'] .app,
+html[data-privacy='1'] .app * {
+  color: transparent !important;
+  text-shadow: 0 0 11px rgba(70, 60, 48, 0.6), 0 0 4px rgba(70, 60, 48, 0.45) !important;
+  caret-color: transparent !important;
+}
+html[data-privacy='1'] .app ::placeholder {
+  color: transparent !important;
+  text-shadow: 0 0 11px rgba(70, 60, 48, 0.5) !important;
+}
+/* 图标靠 currentColor 描边，单独给个灰色，保持界面结构可辨 */
+html[data-privacy='1'] .app svg { color: rgba(120, 110, 95, 0.5) !important; }
+/* 头像 / 聊天图片保持模糊 */
+html[data-privacy='1'] .app :is(.avatar, .avatar-sm, .avatar-xs, .hero-avatar, .msg-avatar, .topbar-avatar, .msg-image) {
+  filter: blur(10px) saturate(0.6) !important;
+}
