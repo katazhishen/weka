@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN" data-mode="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>weka · 微信聊天记录</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <!-- 侧栏 -->
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="brand-logo">w</div>
+          <div class="brand-text">weka</div>
+        </div>
+
+        <nav class="nav" id="nav">
+          <a class="nav-item active" data-route="home" href="#/home">
+            <span class="nav-icon" data-icon="home"></span><span class="nav-label">首页</span>
+          </a>
+          <a class="nav-item" data-route="chat" href="#/chat">
+            <span class="nav-icon" data-icon="chat"></span><span class="nav-label">聊天</span>
+          </a>
+          <a class="nav-item" data-route="moments" href="#/moments">
+            <span class="nav-icon" data-icon="globe"></span><span class="nav-label">朋友圈</span>
+          </a>
+          <a class="nav-item" data-route="p2p" href="#/p2p">
+            <span class="nav-icon" data-icon="chart"></span><span class="nav-label">私聊分析</span>
+          </a>
+          <a class="nav-item" data-route="group" href="#/group">
+            <span class="nav-icon" data-icon="users"></span><span class="nav-label">群聊分析</span>
+          </a>
+          <a class="nav-item" data-route="annual" href="#/annual">
+            <span class="nav-icon" data-icon="report"></span><span class="nav-label">年度报告</span>
+          </a>
+          <a class="nav-item" data-route="export" href="#/export">
+            <span class="nav-icon" data-icon="download"></span><span class="nav-label">导出数据</span>
+          </a>
+          <a class="nav-item" data-route="data" href="#/data">
+            <span class="nav-icon" data-icon="database"></span><span class="nav-label">数据管理</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-foot">
+          <a class="nav-item" data-route="settings" href="#/settings">
+            <span class="nav-icon" data-icon="settings"></span><span class="nav-label">设置</span>
+          </a>
+          <button class="nav-item" id="collapse-btn">
+            <span class="nav-icon" data-icon="collapse"></span><span class="nav-label">收起</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- 主区域 -->
+      <main class="main">
+        <header class="topbar">
+          <div class="topbar-title" id="page-title">首页</div>
+          <div class="topbar-right">
+            <span class="conn-dot" id="conn-dot"></span>
+            <span class="topbar-user" id="topbar-user">…</span>
+            <img class="topbar-avatar" id="topbar-avatar" alt="" />
+          </div>
+        </header>
+        <section class="content" id="content"></section>
+      </main>
+    </div>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

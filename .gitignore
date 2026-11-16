@@ -1,0 +1,19 @@
+# 解密缓存（体积大、可重建）
+.cache/
+# 解密出来的明文库
+*.plain.db
+# 依赖
+node_modules/
+# 内置的第三方运行时（体积大，按 vendor/VENDOR.md 还原）
+vendor/silk-wasm/
+vendor/sherpa-onnx-node/
+vendor/sherpa-onnx-win-x64/
+# 语音模型（228MB，按 models/README.md 下载）
+models/sensevoice-int8/*.onnx
+models/sensevoice-int8/tokens.txt
+# 导出物
+*.export.json
+*.export.txt
+# 系统
+Thumbs.db
+.DS_Store

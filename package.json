@@ -1,0 +1,22 @@
+﻿{
+  "name": "weka",
+  "version": "0.3.0",
+  "private": true,
+  "description": "weka — 微信 4.0 本地聊天记录浏览器（零依赖自研解密引擎）",
+  "type": "module",
+  "bin": {
+    "weka": "./src/cli.mjs"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node src/cli.mjs serve",
+    "sessions": "node src/cli.mjs sessions",
+    "bench": "node src/cli.mjs bench",
+    "doctor": "node src/cli.mjs doctor"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
+
